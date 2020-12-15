@@ -19,7 +19,7 @@ public class QuestionsToText {
 
     public void makeMarkupFile(){
         try {
-            DataOutputStream data = new DataOutputStream(new FileOutputStream(path+"/data.txt"));
+            DataOutputStream data = new DataOutputStream(new FileOutputStream(path));
             for(Question q : questions){
                 data.writeBytes(q.toText()+"~~~\n");
             }

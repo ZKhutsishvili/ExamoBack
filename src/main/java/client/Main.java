@@ -1,8 +1,5 @@
 package client;
-import core.QuestionsToText;
-import core.QuizService;
-import core.QuizToPdf;
-import core.RandomQuestionsGenerator;
+import core.*;
 import core.question.Question;
 
 import java.io.IOException;
@@ -16,37 +13,45 @@ import java.util.concurrent.Executors;
 public class Main {
 
     public static void main(String[] args) {
-        int num = 10;
-        QuizService qz = new QuizService();
-        RandomQuestionsGenerator rn = new RandomQuestionsGenerator();
+//        create quiz service
+//        int num = 10;
+//        QuizService qz = new QuizService();
+//        RandomQuestionsGenerator rn = new RandomQuestionsGenerator();
 //        List<Question> quiz = qz.createQuiz(rn.getQuestions(), num);
+//
+//        generate quiz pdf file
 //        QuizToPdf pdf = new QuizToPdf("/home/zuka/სამუშაო მაგიდა", quiz);
 //        pdf.makeQuizPdf();
-//        QuestionsToText markup = new QuestionsToText("/home/zuka/სამუშაო მაგიდა", quiz);
+//
+//        convert questions to markup
+//        QuestionsToText markup = new QuestionsToText("/home/zuka/სამუშაო მაგიდა/markup.txt", quiz);
 //        markup.makeMarkupFile();
-//        List<String> answers = new ArrayList<>();
 
-//        Simulation of Quiz on localhost server
-        try {
-            ServerSocket ss = new ServerSocket(15000);
-            ExecutorService pool = Executors.newCachedThreadPool();
-            while (true) {
-                Socket socket = ss.accept();
-                List<Question> quiz = qz.createQuiz(rn.getQuestions(), num);
-                List<String> answers = new ArrayList<>();
-                pool.execute(() -> {
-                            try {
-                                serveClient(num, qz, quiz, answers, socket);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                );
-            }
-//            ss.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        convert to markup (java basics)
+//        QuestionsConverter q = new QuestionsConverter("/home/zuka/სამუშაო მაგიდა/Chapter01_Java_Basics.txt", "/home/zuka/სამუშაო მაგიდა/Answers_Chapter1.txt", "/home/zuka/სამუშაო მაგიდა/markup.txt");
+//        q.convert();
+
+//        Simulation of Quiz on localhost server (multiple users at the same time)
+//        try {
+//            ServerSocket ss = new ServerSocket(15000);
+//            ExecutorService pool = Executors.newCachedThreadPool();
+//            while (true) {
+//                Socket socket = ss.accept();
+//                List<Question> quiz = qz.createQuiz(rn.getQuestions(), num);
+//                List<String> answers = new ArrayList<>();
+//                pool.execute(() -> {
+//                            try {
+//                                serveClient(num, qz, quiz, answers, socket);
+//                            } catch (IOException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//                );
+//            }
+////            ss.close();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
     }
 
     private static void serveClient(int num, QuizService qz, List<Question> quiz, List<String> answers, Socket socket) throws IOException {
