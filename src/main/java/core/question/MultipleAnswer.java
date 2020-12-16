@@ -42,7 +42,7 @@ public class MultipleAnswer implements Question{
 
     @Override
     public String toText() {
-        String str = "multiple answer\n"+question+"\n";
+        String str = "multiple answer\n"+question+"://\n";
         int len = possibleAnswers.size();
         for(int i = 0; i < len; i++){
             String ans = possibleAnswers.get(i);

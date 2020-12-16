@@ -45,7 +45,7 @@ public class BlankQuestion implements Question {
 
     @Override
     public String toText() {
-        return "blank\n"+question+"\n"+answer+"@=\n";
+        return "blank\n"+question+"://\n"+answer+"@=\n";
     }
 
 
