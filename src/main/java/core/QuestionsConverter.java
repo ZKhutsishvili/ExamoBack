@@ -75,7 +75,8 @@ public class QuestionsConverter {
                 }
                 answers = newAnswers;
             }
-            current = new MultipleChoice(question, answers.get(answerIndex), answers);
+            String explanation = ans.substring(ans.indexOf(" ")+1);
+            current = new MultipleChoice(question, answers.get(answerIndex), answers, explanation);
             questions.add(current);
         }
         QuestionsToText qtt = new QuestionsToText(toPath, questions);

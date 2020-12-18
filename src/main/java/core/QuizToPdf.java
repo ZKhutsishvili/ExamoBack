@@ -33,10 +33,10 @@ public class QuizToPdf {
                 par.add(curr.getQuestion()+"\n");
                 List<String> posAnswers = curr.getPossibleAnswers();
                 if(posAnswers!=null){
-                    char c = 'a';
+//                    char c = 'a';
                     for(String ans : posAnswers){
-                        par.add(c+") "+ans+"\n");
-                        c++;
+                        par.add(/*c+") "+*/ans+"\n");
+//                        c++;
                     }
                 }else{
                     par.add("Answer: \n");

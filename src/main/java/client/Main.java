@@ -31,6 +31,11 @@ public class Main {
 //        QuestionsConverter q = new QuestionsConverter("/home/zuka/სამუშაო მაგიდა/Chapter01_Java_Basics.txt", "/home/zuka/სამუშაო მაგიდა/Answers_Chapter1.txt", "/home/zuka/სამუშაო მაგიდა/markup.txt");
 //        q.convert();
 
+//        MarkupToQuestions mtq = new MarkupToQuestions("/home/zuka/სამუშაო მაგიდა/markup.txt");
+//        List<Question> ls = mtq.getQuestions();
+//        QuizToPdf pdf = new QuizToPdf("/home/zuka/სამუშაო მაგიდა", ls);
+//        pdf.makeQuizPdf();
+
 //        Simulation of Quiz on localhost server (multiple users at the same time)
 //        try {
 //            ServerSocket ss = new ServerSocket(15000);

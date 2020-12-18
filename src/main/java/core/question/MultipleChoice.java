@@ -4,13 +4,21 @@ import java.util.Collections;
 import java.util.List;
 
 public class MultipleChoice implements Question{
-    String question, answer;
+    String question, answer, explanation;
     List<String> possibleAnswers;
 
     public MultipleChoice(String question, String answer, List<String> possibleAnswers){
         this.question = question;
         this.answer = answer;
         this.possibleAnswers = possibleAnswers;
+        explanation = "";
+    }
+
+    public MultipleChoice(String question, String answer, List<String> possibleAnswers, String explanation){
+        this.question = question;
+        this.answer = answer;
+        this.possibleAnswers = possibleAnswers;
+        this.explanation = explanation;
     }
 
     @Override
@@ -25,7 +33,7 @@ public class MultipleChoice implements Question{
 
     @Override
     public List<String> getPossibleAnswers() {
-        Collections.shuffle(possibleAnswers);
+//        Collections.shuffle(possibleAnswers);
         return possibleAnswers;
     }
 
@@ -42,14 +50,20 @@ public class MultipleChoice implements Question{
     public String toText() {
         String str = "multiple choice\n"+question+"://\n";
         int len = possibleAnswers.size();
+        char c = 'A';
         for(int i = 0; i < len; i++){
             String ans = possibleAnswers.get(i);
-            str += ans+"@";
+            str += c+" "+ans+"@";
             if(ans.equals(answer)){
                 str += "1.0\n";
             }else{
                 str += "0.0\n";
             }
+            c++;
+        }
+        str += "???\n";
+        if(explanation.length()>0){
+            str += explanation+"\n";
         }
         return str;
     }
