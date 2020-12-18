@@ -9,4 +9,5 @@ public interface Question {
     String getAnswer();
     String getType();
     String toText();
+    String getExplanation();
 }

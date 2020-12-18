@@ -67,4 +67,9 @@ public class MultipleChoice implements Question{
         }
         return str;
     }
+
+    @Override
+    public String getExplanation() {
+        return explanation;
+    }
 }

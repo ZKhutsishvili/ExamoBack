@@ -48,5 +48,10 @@ public class BlankQuestion implements Question {
         return "blank\n"+question+"://\n"+answer+"@=\n";
     }
 
+    @Override
+    public String getExplanation() {
+        return null;
+    }
+
 
 }

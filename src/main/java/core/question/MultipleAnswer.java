@@ -56,4 +56,9 @@ public class MultipleAnswer implements Question{
         return str;
     }
 
+    @Override
+    public String getExplanation() {
+        return null;
+    }
+
 }
