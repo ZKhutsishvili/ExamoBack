@@ -33,52 +33,71 @@ public class Main {
 
         MarkupToQuestions mtq = new MarkupToQuestions("/home/zuka/სამუშაო მაგიდა/markup.txt");
         List<Question> ls = mtq.getQuestions();
-        QuizToPdfWithAnswers pdf = new QuizToPdfWithAnswers("/home/zuka/სამუშაო მაგიდა", ls);
-        pdf.makeQuizPdf();
+//        QuizToPdfWithAnswers pdf = new QuizToPdfWithAnswers("/home/zuka/სამუშაო მაგიდა", ls);
+//        pdf.makeQuizPdf();
 
 //        Simulation of Quiz on localhost server (multiple users at the same time)
-//        try {
-//            ServerSocket ss = new ServerSocket(15000);
-//            ExecutorService pool = Executors.newCachedThreadPool();
-//            while (true) {
-//                Socket socket = ss.accept();
-//                List<Question> quiz = qz.createQuiz(rn.getQuestions(), num);
-//                List<String> answers = new ArrayList<>();
-//                pool.execute(() -> {
-//                            try {
-//                                serveClient(num, qz, quiz, answers, socket);
-//                            } catch (IOException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                );
-//            }
-////            ss.close();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
+        try {
+            ServerSocket ss = new ServerSocket(15000);
+            ExecutorService pool = Executors.newCachedThreadPool();
+            QuizService qz = new QuizService();
+            int num = 5;
+            while (true) {
+                Socket socket = ss.accept();
+                List<Question> quiz = qz.createQuiz(ls, num);
+                List<String> answers = new ArrayList<>();
+                pool.execute(() -> {
+                            try {
+                                serveClient(num, qz, quiz, answers, socket);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                );
+            }
+//            ss.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private static void serveClient(int num, QuizService qz, List<Question> quiz, List<String> answers, Socket socket) throws IOException {
         Scanner scanner = new Scanner(socket.getInputStream());
         PrintWriter pw = new PrintWriter(socket.getOutputStream());
         pw.println("\nQuiz");
+        pw.println("practice/exam");
         pw.flush();
+        String str = scanner.nextLine();
+        boolean isExam = false;
+        if("exam".equals(str)){
+            isExam = true;
+        }else if(!"practice".equals(str)){
+            pw.println("END");
+            pw.flush();
+            return;
+        }
         for(int i = 0; i < quiz.size(); i++){
             pw.println();
             Question curr = quiz.get(i);
-            pw.println(quiz.get(i).getQuestion());
+            pw.println(curr.getQuestion());
             List<String> possAnswers = curr.getPossibleAnswers();
+            if(isExam){
+                Collections.shuffle(possAnswers);
+            }
             if(possAnswers!=null){
                 char c = 'a';
                 for(String ans : possAnswers){
-                    pw.println(c + ")" + ans);
+                    pw.println(c + ")" + ans.substring(2));
                     pw.flush();
                     c++;
                 }
             }
             pw.flush();
-            answers.add(scanner.next());
+            answers.add(scanner.nextLine());
+            if(!isExam){
+                pw.println("\nCorrect answer: "+curr.getAnswer());
+                pw.println("\nExplanation: "+curr.getExplanation());
+            }
         }
         int score = qz.score(quiz,answers);
         pw.println("Your score is " + score + "/" + num);

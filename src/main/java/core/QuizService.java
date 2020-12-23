@@ -43,7 +43,7 @@ public class QuizService {
                 if(count == userAnswers.size())
                     score++;
             }else {
-                if (question.getAnswer().equals(answers.get(i)))
+                if (question.getAnswer().substring(2).equals(answers.get(i)))
                     score++;
             }
         }
